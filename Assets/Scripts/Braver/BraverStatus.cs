@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 
 public class BraverStatus
 {
@@ -16,41 +18,26 @@ public class BraverStatus
         return singleIntance;
     }
 
-    // Attributes
-    private List<string> attributes;
-    public List<string> getAttributes()
+    // private List<string> attributes;
+    private Dictionary<BraverAttribute, int> attributes = new Dictionary<BraverAttribute, int>();
+    public Dictionary<BraverAttribute, int> getAttributes()
     {
         return attributes;
     }
-    private List<int> attributeValue;
-    public List<int> getAttributeValue()
-    {
-        return attributeValue;
-    }
     //singleton instance
     RepositoryOfItems repository;
-    ObserverMessage message;
     private BraverStatus()
     {
-        //Init braver status list
-        attributes = new List<string>();
-        attributeValue = new List<int>();
-        attributes.Add("Floor");
-        attributes.Add("Health");
-        attributes.Add("Attack");
-        attributes.Add("Defence");
-        attributes.Add("Shield");
-        attributes.Add("Experience");
-        attributes.Add("Gold");
         //Load init braver status
-        JObject status = Model.GetInitBraverData();
-        foreach (string attribute in attributes)
+        JObject JsonData = Model.GetInitBraverData();
+        foreach (BraverAttribute a in Enum.GetValues(typeof(BraverAttribute)))
         {
-            attributeValue.Add((int)status[attribute]);
+            string strAttribute = a.ToString();
+            attributes.Add(a, (int)JsonData.GetValue(strAttribute));
         }
         //Load init braver items
         repository = RepositoryOfItems.GetInstance();
-        JToken items = status["Items"];
+        JToken items = JsonData["Items"];
         foreach (JToken item in items)
         {
             JObject it = (JObject)item;
@@ -58,7 +45,12 @@ public class BraverStatus
             int num = (int)it["num"];
             repository.UpdateItem(itemID, num);
         }
-        //Load message
-        message = ObserverMessage.GetInstance();
+    }
+
+    public void UpdateStatus(BraverAttribute attribute, int num)
+    {
+        attributes[attribute] += num;
+        EventCenter.Broadcast(EventType.StatusUpdate);
+        return;
     }
 }

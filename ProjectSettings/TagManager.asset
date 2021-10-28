@@ -14,9 +14,9 @@ TagManager:
   - Wall
   - Obstacle
   - Item
-  - 
+  - Enemy
+  - Gateway
   - Braver
-  - 
   - 
   - 
   - 

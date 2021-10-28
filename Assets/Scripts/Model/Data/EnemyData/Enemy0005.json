@@ -1,0 +1,10 @@
+{
+    "Attack": 35,
+    "Defence": 10,
+    "EnemyID": 5,
+    "EnemyName": "วเอทนึ",
+    "Experience": 5,
+    "Gold": 5,
+    "Health": 200,
+    "Skill": []
+}

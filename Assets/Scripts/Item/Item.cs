@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Item : MonoBehaviour
 {
     public int itemID;
-    public bool display;
+    public int value;
     public abstract void onHitEvent();
     protected virtual void remove()
     {

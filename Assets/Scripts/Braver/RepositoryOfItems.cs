@@ -17,12 +17,10 @@ public class RepositoryOfItems
 
     //Attributes
     private List<int> itemList; //Store items
-    ObserverMessage message; //Send message
     private RepositoryOfItems()
     {
         //Init attributes
         itemList = new List<int>();
-        message = ObserverMessage.GetInstance();
         //Placeholder for itemList[0], because list generally start from 1.
         itemList.Add(-1);
         //Set subscribers
@@ -54,7 +52,7 @@ public class RepositoryOfItems
         {
             itemList[itemID] = num;
             AlertItemInfo();
-            message.itemUpdate = true;
+            EventCenter.Broadcast(EventType.ItemUpdate);
             return;
         }
         //Check the item num after delete
@@ -62,7 +60,7 @@ public class RepositoryOfItems
         if (tmp >= 0)
         {
             itemList[itemID] = tmp;
-            message.itemUpdate = true;
+            EventCenter.Broadcast(EventType.ItemUpdate);
             return;
         }
     }

@@ -14,6 +14,12 @@ public class Model
         return initStatus;
     }
 
+    public static JObject GetEnemyData(int enemyID)
+    {
+        string jsonFile = $@"EnemyData\Enemy{enemyID:D4}";
+        JObject enemyData = Readjson(jsonFile);
+        return enemyData;
+    }
     private static JObject Readjson(string fileName)
     {
         string jsonFile = folderPath + fileName + ".json";//JSONÎÄ¼þÂ·¾¶

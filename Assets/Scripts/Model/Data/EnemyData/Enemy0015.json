@@ -1,0 +1,10 @@
+{
+    "Attack": 200,
+    "Defence": 110,
+    "EnemyID": 15,
+    "EnemyName": "高级法师",
+    "Experience": 25,
+    "Gold": 30,
+    "Health": 100,
+    "Skill": []
+}
