@@ -28,12 +28,13 @@ public class Gateway : MonoBehaviour
             //Protect object
             DontDestroyOnLoad(GlobalVariables.braver);
             DontDestroyOnLoad(GlobalVariables.UI);
-            //Load new scene
-            SceneManager.LoadScene(targetSceneName);
             //Transfer braver
             GlobalVariables.isTransfering = true;
             GlobalVariables.targetSceneName = targetSceneName;
             GlobalVariables.targetPosition = targetPosition;
+            //Load new scene
+            SceneManager.LoadScene(targetSceneName);
+            
         }
         catch(UnityException e)
         {

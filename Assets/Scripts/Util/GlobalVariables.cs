@@ -19,4 +19,13 @@ public class GlobalVariables
     public static bool isTransfering;
     public static string targetSceneName;
     public static Vector2 targetPosition;
+
+    // Scene destroyed objects
+    public static Dictionary<string, List<Vector2>> sceneDestroyedObjects = new Dictionary<string, List<Vector2>>();
+
+    // Store enemy data
+    public static Dictionary<int, EnemyAttribute> enemyAttributeTempStore = new Dictionary<int, EnemyAttribute>();
+
+    // Store item information
+    public static Dictionary<int, ItemAttribute> itemAttributeTempStore = new Dictionary<int, ItemAttribute>();
 }

@@ -20,6 +20,13 @@ public class Model
         JObject enemyData = Readjson(jsonFile);
         return enemyData;
     }
+
+    public static JObject GetItemData()
+    {
+        string jsonFile = $@"ItemData\ItemInfo";
+        JObject itemData = Readjson(jsonFile);
+        return itemData;
+    }
     private static JObject Readjson(string fileName)
     {
         string jsonFile = folderPath + fileName + ".json";//JSONÎÄ¼þÂ·¾¶

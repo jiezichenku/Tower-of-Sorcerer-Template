@@ -1,10 +1,10 @@
 {
-    "Attack": 1333,
-    "Defence": 1333,
+    "Attack": 2550,
+    "Defence": 2250,
     "EnemyID": 31,
-    "EnemyName": "ºìÒÂÄ§Íõ",
-    "Experience": 133,
-    "Gold": 133,
-    "Health": 20000,
+    "EnemyName": "Nether Lord",
+    "Experience": 275,
+    "Gold": 312,
+    "Health": 45000,
     "Skill": []
 }

@@ -9,13 +9,14 @@ public class BraverController : MonoBehaviour
     public BraverStatus status;
     //Movement attributes
     Vector2 moveDir;
+    int dir;
     public LayerMask detectLayer;
     public LayerMask gatewayLayer;
+    //Animation controller
+    public Animator animator;
     // Start is called before the first frame update
     void Start()
     {
-        //Set Global varibles
-        GlobalVariables.braver = gameObject;
         //Singleton pattern constructor
         repository = RepositoryOfItems.GetInstance();
         status = BraverStatus.GetInstance();
@@ -33,22 +34,26 @@ public class BraverController : MonoBehaviour
         if (Input.GetKey(KeyCode.RightArrow))
         {
             moveDir = Vector2.right;
-            //print("right");
+            dir = 1;
+            animator.SetInteger("Direction", 1);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             moveDir = Vector2.left;
-            //print("left");
+            dir = 2;
+            animator.SetInteger("Direction", 2);
         }
         if (Input.GetKey(KeyCode.UpArrow))
         {
             moveDir = Vector2.up;
-            //print("up");
+            dir = 3;
+            animator.SetInteger("Direction", 3);
         }
         if (Input.GetKey(KeyCode.DownArrow))
         {
             moveDir = Vector2.down;
-            //print("down");
+            dir = 4;
+            animator.SetInteger("Direction", 4);
         }
 
         if (Time.frameCount % 5 == 0)
@@ -57,9 +62,27 @@ public class BraverController : MonoBehaviour
             {
                 transform.Translate(moveDir);
             }
+            else
+            {
+                if (dir == 1)
+                {
+                    animator.Play("RightWalk", 0, 0);
+                }
+                if (dir == 2)
+                {
+                    animator.Play("LeftWalk", 0, 0);
+                }
+                if (dir == 3)
+                {
+                    animator.Play("BackwardWalk", 0, 0);
+                }
+                if (dir == 4)
+                {
+                    animator.Play("ForwardWalk", 0, 0);
+                }
+            }
         }
         moveDir = Vector2.zero;
-
     }
     bool moveable(Vector2 dir)
     {
@@ -89,18 +112,8 @@ public class BraverController : MonoBehaviour
             }
             if (raycastHit.collider.GetComponent<Item>() != null)
             {
-                Item it = raycastHit.collider.GetComponent<Item>();
-                GlobalVariables.currentEventName = it.name;
-                it.onHitEvent();
                 return true;
             }
-            if (raycastHit.collider.GetComponent<Enemy>() != null)
-            {
-                Enemy e = raycastHit.collider.GetComponent<Enemy>();
-                GlobalVariables.currentEventName = e.name;
-                e.battle();
-            }
-
             return false;
         }
     }

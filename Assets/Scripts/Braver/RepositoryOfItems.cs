@@ -1,3 +1,4 @@
+using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,7 +24,8 @@ public class RepositoryOfItems
         itemList = new List<int>();
         //Placeholder for itemList[0], because list generally start from 1.
         itemList.Add(-1);
-        //Set subscribers
+        //Set temp storage of item information
+        storeItemInfo();
     }
     public bool CheckItem(int itemID, int num)
     {
@@ -65,6 +67,19 @@ public class RepositoryOfItems
         }
     }
 
+    public List<int> getItemList()
+    {
+        List<int> list = new List<int>();
+        for(int i = 0; i < itemList.Count; i++)
+        {
+            if (itemList[i] > 0)
+            {
+                list.Add(i);
+            }
+        }
+        return list;
+    }
+
     private void AlertItemInfo()
     {
 
@@ -72,5 +87,28 @@ public class RepositoryOfItems
     public int getItem(int itemID)
     {
         return itemList[itemID];
+    }
+
+    private void storeItemInfo()
+    {
+        JObject JsonData = Model.GetItemData();
+        JArray itemList = (JArray)JsonData["Info"];
+        foreach (var itemInfo in itemList)
+        {
+            int itemID = (int)itemInfo["ItemID"];
+            string itemName = (string)itemInfo["ItemName"];
+            string itemDescription = (string)itemInfo["ItemDescription"];
+            ItemAttribute itemAttribute = new ItemAttribute(itemID, itemName, itemDescription);
+            if (GlobalVariables.itemAttributeTempStore.ContainsKey(itemID))
+            {
+                GlobalVariables.itemAttributeTempStore[itemID] = itemAttribute;
+            }
+            else
+            {
+                GlobalVariables.itemAttributeTempStore.Add(itemID, itemAttribute);
+            }
+            
+        }
+
     }
 }

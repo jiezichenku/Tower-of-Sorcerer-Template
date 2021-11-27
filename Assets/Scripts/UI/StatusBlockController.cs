@@ -41,9 +41,7 @@ public class StatusBlockController : MonoBehaviour
     }
     private void OnDestroy()
     {
-        //Log off listener
-        EventCenter.RemoveListener(EventType.ItemUpdate, onUpdate);
-        EventCenter.RemoveListener(EventType.StatusUpdate, onUpdate);
+
     }
     public void onUpdate()
     {
